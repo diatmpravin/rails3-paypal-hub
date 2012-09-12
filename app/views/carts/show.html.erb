@@ -24,5 +24,10 @@
 
 <p>
   <%= link_to "Continue Shopping", products_url %> |
-  <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), @cart.paypal_url(products_url, payment_notifications_url) %>  
+  <%#= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), @cart.paypal_url(products_url, payment_notifications_url) %>  
+  <% form_tag APP_CONFIG[:paypal_url] do %>
+    <%= hidden_field_tag :cmd, "_s-xclick" %>
+    <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(products_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+    <%= submit_tag "Checkout" %>
+  <% end %>
 </p>
