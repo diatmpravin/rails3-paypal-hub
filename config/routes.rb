@@ -1,4 +1,6 @@
 Rails3PaypalHub::Application.routes.draw do
+  resources :payment_notifications
+
   resources :carts
   
   resources :products

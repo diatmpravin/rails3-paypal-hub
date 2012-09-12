@@ -5,14 +5,15 @@ class Cart < ActiveRecord::Base
     line_items.to_a.sum(&:full_price)
   end
   
-  def paypal_url(return_url)
+  def paypal_url(return_url, notify_url)
     values = {
       :business => 'diatm._1347268590_biz@gmail.com',
       :cmd => '_cart',
       :upload => 1,
       :return => return_url,
-      :invoice => id
-    }
+      :invoice => id,
+      :notify_url => notify_url
+    }    
     line_items.each_with_index do |item, index|
       values.merge!({
         "amount_#{index+1}" => item.unit_price,
